@@ -40,8 +40,13 @@ public class Map {
         return objects;
     }
 
+    // Returns Object ID
+    public int getObject(int x, int y) {
+        return map[x][y];
+    }
+
     // Converts given Index to Object
-    public String getObject(int x, int y) {
+    public String getObjectSymbol(int x, int y) {
         return objects[map[x][y]];
     }
 
