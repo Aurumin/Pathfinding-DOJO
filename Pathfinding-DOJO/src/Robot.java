@@ -1,13 +1,15 @@
 public class Robot {
     private Map map;
+    private boolean[][][] visited;
     private int x, y, facing;
     private String[] directions = {"N", "E", "S", "W"};
 
     public Robot(Map map, int x, int y, int facing) {
         this.map = map;
+        initVisited(map.getWidth(), map.getHeight());
         this.x = x;
         this.y = y;
-        facing = this.facing;
+        this.facing = facing;
     }
 
     // Getter Methods for Robot:
@@ -28,8 +30,20 @@ public class Robot {
     }
 
     // Setter Methods:
+    // Setup visited map:
+    public void initVisited(int maxWidth, int maxHeight) {
+        visited = new boolean[maxWidth][maxHeight][4];
+        for (int i = 0; i < maxWidth; i++) {
+            for (int j = 0; j < maxHeight; j++) {
+                for (int k = 0; k < 4; k++) {
+                    visited[i][j][k] = false;
+                }
+            }
+        }
+    }
+
     public boolean moveForward() {
-        if (isObstructed()) return false;
+        if (isObstructed(inFrontX(), inFrontY())) return false;
         else
         {
             x += inFrontX();
@@ -56,8 +70,8 @@ public class Robot {
     }
 
     // Check wether tile in front of robot is obstructed:
-    public boolean isObstructed() {
-        return (map.getObject(inFrontX(), inFrontY()) == 1);
+    public boolean isObstructed(int tx, int ty) {
+        return (map.getObject(tx, ty) == 1 || tx < 0 || ty < 0 || tx > map.getWidth() || ty > map.getHeight());
     }
 
     // Returns the X/Y Coord in front of the robot

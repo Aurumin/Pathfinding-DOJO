@@ -6,6 +6,8 @@ public class Controls {
     private Interface theInterface = new Interface();
 
     public void start() throws FileNotFoundException, IOException{
+
+        // SETUP
         // Initialyze empty map
         map = new Map(20, 40, readMap());
 
@@ -16,9 +18,12 @@ public class Controls {
         map.drawHorizontalTiles(11, 23, 3, 0);
         map.drawHorizontalTiles(10, 26, 5, 1);
 
-        robot = new Robot(map.searchForX(2),map.searchForY(2),0);
+        robot = new Robot(map, map.searchForX(2),map.searchForY(2),0);
 
         theInterface.printMap(robot, map);
+
+        // MOVE
+        System.out.println(AStar.start(robot));
     }
 
     private String readMap() throws FileNotFoundException, IOException {
